@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 
 CONFIG_PATH = Path(__file__).with_name("dashboard_fusion_config.json")
 
@@ -608,7 +609,7 @@ sauver_params(
 )
 
 # ---------------- INTERFACE COMPOSANTS ----------------
-onglet_pret, onglet_rav = st.tabs(["📈 Simulateur de prêt", "💶 Reste à vivre & Budget"])
+onglet_pret, onglet_rav, onglet_manuel = st.tabs(["📈 Simulateur de prêt", "💶 Reste à vivre & Budget", "📖 Manuel Utilisateur"])
 
 with onglet_pret:
     col1, col2, col3 = st.columns(3)
@@ -787,3 +788,8 @@ with onglet_rav:
         st.dataframe(df_depenses.sort_values("Coût Mensuel", ascending=False), use_container_width=True)
     else:
         st.info("Aucune dépense courante renseignée.")
+
+with onglet_manuel:
+    with open("manuel_utilisateur_simulateur.html", "r", encoding="utf-8") as f:
+        html_code = f.read()
+    components.html(html_code, height=900, scrolling=True)

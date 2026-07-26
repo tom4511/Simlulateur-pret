@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuel Utilisateur - Simulateur de Prêt & Reste à Vivre</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #0d9488;
+            --accent-color: #d97706;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --danger-color: #dc2626;
+            --success-color: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+        }
+
+        nav.toc {
+            background: var(--bg-card);
+            padding: 20px 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        nav.toc h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        nav.toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+        }
+
+        nav.toc a {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav.toc a:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
+        }
+
+        section {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            border-bottom: 2px solid #eff6ff;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            font-size: 0.98rem;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .math-box {
+            background-color: var(--code-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 12px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: "Cambria Math", "Georgia", "Times New Roman", serif;
+            font-size: 1.05rem;
+            overflow-x: auto;
+        }
+
+        .formula-title {
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--secondary-color);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .callout {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .callout-info {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        .callout-warning {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tag-input { background: #e0f2fe; color: #0369a1; }
+        .tag-output { background: #dcfce7; color: #15803d; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>📖 Manuel Utilisateur & Guide de Calcul</h1>
+        <p>Simulateur de Prêt Immobilier, Fiscalité IR 2026 & Reste à Vivre du Foyer</p>
+    </header>
+
+    <nav class="toc">
+        <h2>Table des Matières</h2>
+        <ul>
+            <li><a href="#vue-densemble">1. Vue d'ensemble & Prise en main</a></li>
+            <li><a href="#modes-simulation">2. Modes de Simulation</a></li>
+            <li><a href="#parametres-entree">3. Dictionnaire complet des Paramètres</a></li>
+            <li><a href="#formules-prets">4. Équations des Prêts & Amortissements</a></li>
+            <li><a href="#formules-fiscalite">5. Équations de la Fiscalité (IR 2026)</a></li>
+            <li><a href="#formules-budget">6. Équations du Reste à Vivre & Budget</a></li>
+            <li><a href="#interpretation-resultats">7. Interprétation des Résultats & Métriques</a></li>
+        </ul>
+    </nav>
+
+    <!-- SECTION 1 -->
+    <section id="vue-densemble">
+        <h2>1. Vue d'ensemble & Prise en main</h2>
+        <p>
+            Ce simulateur est un outil décisionnel complet conçu pour modéliser une acquisition immobilière tout en évaluant l'impact réel sur la trésorerie mensuelle et le reste à vivre du ménage.
+        </p>
+        <p>L'interface s'articule autour de deux zones principales :</p>
+        <ul>
+            <li><strong>La barre latérale (Sidebar) :</strong> zone de saisie dynamique regroupant vos revenus, votre composition familiale, le financement du projet, les prêts secondaires, l'option prêt relais et le détail de vos dépenses courantes.</li>
+            <li><strong>Le tableau de bord principal (Onglets) :</strong>
+                <ul>
+                    <li><strong>📈 Simulateur de prêt :</strong> métriques synthétiques du financement, tableau d'amortissement agrégé et graphiques d'évolution du Capital Restant Dû (CRD).</li>
+                    <li><strong>💶 Reste à vivre & Budget :</strong> analyse du niveau de vie post-acquisition, estimation de l'impôt sur le revenu (barème 2026), seuils bancaires et diagrammes de flux (Waterfall et camemberts).</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section id="modes-simulation">
+        <h2>2. Modes de Simulation</h2>
+        <p>Le simulateur propose deux logiques de calcul commutables depuis le haut de la barre latérale :</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mode</th>
+                    <th>Objectif</th>
+                    <th>Inconnue calculée</th>
+                    <th>Variable fixée</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Mode Mensualité</strong></td>
+                    <td>Savoir combien coûtera par mois l'achat d'un bien au prix déterminé.</td>
+                    <td>Mensualité totale du prêt principal et globale.</td>
+                    <td>Prix du bien ($P_{bien}$) défini par l'utilisateur.</td>
+                </tr>
+                <tr>
+                    <td><strong>Mode Capacité d'emprunt</strong></td>
+                    <td>Déterminer le prix d'achat maximal visable selon un taux d'endettement cible (ex: 35%).</td>
+                    <td>Prix d'achat maximal ($P_{max}$) et capital empruntable.</td>
+                    <td>Taux d'endettement maximal ($	au_{endettement}$) défini par l'utilisateur.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section id="parametres-entree">
+        <h2>3. Dictionnaire complet des Paramètres d'Entrée</h2>
+        <p>Chaque paramètre modifiable dans la barre latérale est décrit ci-dessous :</p>
+
+        <h3>Revenus & Charges du ménage</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Description & Rôle</th>
+                    <th>Impact dans la simulation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Revenu 1 brut</code></td>
+                    <td>Salaire ou revenu professionnel brut mensuel du premier emprunteur (€).</td>
+                    <td>Sert de base au calcul du revenu net et à l'assiette de l'impôt sur le revenu.</td>
+                </tr>
+                <tr>
+                    <td><code>Revenu 2 brut</code></td>
+                    <td>Salaire ou revenu professionnel brut mensuel du second emprunteur (€).</td>
+                    <td>Inclus dans le revenu global du foyer.</td>
+                </tr>
+                <tr>
+                    <td><code>Autres revenus bruts</code></td>
+                    <td>Revenus fonciers, primes récurrentes, pensions reçues (€/mois).</td>
+                    <td>Ajoutés aux revenus bruts totaux. En déclaration séparée, ils sont rattachés au Revenu 2.</td>
+                </tr>
+                <tr>
+                    <td><code>Taux charges sociales (%)</code></td>
+                    <td>Pourcentage moyen de cotisations sociales pour passer du brut au net avant impôt (ex: 23%).</td>
+                    <td>Convertit le revenu brut en revenu net avant impôt (base légale d'endettement bancaire).</td>
+                </tr>
+                <tr>
+                    <td><code>Charges fixes (€/mois)</code></td>
+                    <td>Charges financières récurrentes hors projet (pensions versées, crédits conso non rachetés).</td>
+                    <td>Viennent réduire directement la capacité mensuelle de remboursement.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Foyer fiscal & Composition</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Description</th>
+                    <th>Rôle fiscal & budgétaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>Situation</code></td>
+                    <td>"Vie en couple" ou "Personne seule".</td>
+                    <td>Définit le nombre d'adultes fiscaux (1 ou 2) et le nombre de parts de base.</td>
+                </tr>
+                <tr>
+                    <td><code>Nombre d'enfants</code></td>
+                    <td>Nombre d'enfants à charge au sens fiscal.</td>
+                    <td>Augmente le nombre de parts fiscales (Quotient Familial) et le nombre de personnes au foyer.</td>
+                </tr>
+                <tr>
+                    <td><code>Déclaration commune</code></td>
+                    <td>Coché si mariés/pacsés (déclaration unique), décoché si concubinage/union libre.</td>
+                    <td>Si décoché, l'impôt est calculé séparément pour chaque partenaire.</td>
+                </tr>
+                <tr>
+                    <td><code>Enfants rattachés à R1</code></td>
+                    <td>Répartition des enfants si déclarations séparées.</td>
+                    <td>Attribue les parts fiscales supplémentaires au Revenu 1 ou au Revenu 2.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Projet Immobilier & Prêts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Prix du bien (€)</code></td><td>Prix d'achat net vendeur ou FAI (saisi en Mode Mensualité).</td></tr>
+                <tr><td><code>Apport personnel (€)</code></td><td>Fond propre réinjecté directement dans l'opération (épargne disponible).</td></tr>
+                <tr><td><code>Frais de notaire (%)</code></td><td>Taux estimé des frais d'acquisition (ex: 7 à 8% ancien, 2 à 3% neuf).</td></tr>
+                <tr><td><code>Frais annexes (€)</code></td><td>Frais de dossier bancaire, caution/hypothèque, courtage.</td></tr>
+                <tr><td><code>Taux crédit principal (%)</code></td><td>Taux d'intérêt annuel nominal du prêt immobilier principal.</td></tr>
+                <tr><td><code>Durée prêt principal (ans)</code></td><td>Durée d'amortissement du prêt principal (5 à 30 ans).</td></tr>
+                <tr><td><code>Assurance prêt (%)</code></td><td>Taux annuel moyen de l'assurance emprunteur calculé sur le capital initial.</td></tr>
+                <tr><td><code>Taux d'endettement max (%)</code></td><td>Seuil maximal d'endettement toléré par la banque (usuellement 35%).</td></tr>
+                <tr><td><code>Prêts complémentaires (1 & 2)</code></td><td>Montant, taux et durée de prêts aidés ou secondaires (PTZ, Action Logement, etc.).</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Prêt Relais (Optionnel)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><code>Prix de vente estimé (€)</code></td><td>Valeur de marché estimée de votre bien immobilier actuel en vente.</td></tr>
+                <tr><td><code>Capital Restant Dû (CRD) (€)</code></td><td>Solde du prêt en cours sur le bien à vendre.</td></tr>
+                <tr><td><code>Décote banque / Quotité (%)</code></td><td>Pourcentage d'avance accordé par la banque sur la valeur du bien (souvent 70%).</td></tr>
+                <tr><td><code>Taux du prêt relais (%)</code></td><td>Taux d'intérêt annuel appliqué à l'avance relais (remboursement <i>in fine</i>).</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section id="formules-prets">
+        <h2>4. Équations des Prêts & Amortissements</h2>
+        <p>Cette section vous permet de recontrôler exactement tous les calculs financiers effectués par le moteur Python.</p>
+
+        <h3>4.1 Convertisseur Brut → Net & Capacité de Mensualité</h3>
+        <div class="math-box">
+            <div class="formula-title">Revenu Net Mensuel Avant Impôt</div>
+            $$R_{net\_ai} = (R_1 + R_2 + R_{autres}) 	imes \left(1 - rac{	au_{soc}}{100}
+ight)$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Mensualité Maximale Autorisée par la Banque</div>
+            $$M_{max} = \max\left(R_{net\_ai} 	imes rac{	au_{endettement}}{100} - C_{fixes}, 0
+ight)$$
+        </div>
+
+        <h3>4.2 Formule Standard d'une Mensualité d'Emprunt (Amortissement Constant)</h3>
+        <p>Pour un capital $K$, un taux annuel $	au\%$ et une durée de $D$ ans ($n = D 	imes 12$ mois), le taux mensuel est $r = rac{	au}{100 	imes 12}$. La mensualité hors assurance $M$ est donnée par :</p>
+        <div class="math-box">
+            <div class="formula-title">Formule Actuarielle de Mensualité (Hors Assurance)</div>
+            $$M(K, 	au, D) = egin{cases} rac{K}{n} & 	ext{si } r = 0 \ K 	imes rac{r}{1 - (1 + r)^{-n}} & 	ext{si } r > 0 \end{cases}$$
+        </div>
+
+        <h3>4.3 Mode "Mensualité" : Calcul du Capital & Mensualité Totale</h3>
+        <div class="math-box">
+            <div class="formula-title">Frais de Notaire & Montant Total à Financer</div>
+            $$F_{notaire} = P_{bien} 	imes rac{	au_{notaire}}{100}$$
+            $$K_{total\_à\_financer} = \max(P_{bien} + F_{notaire} + F_{annexes} - A_{total}, 0)$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Capital du Prêt Principal</div>
+            $$K_{principal} = \max(K_{total\_à\_financer} - K_{comp1} - K_{comp2}, 0)$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Assurance Mensuelle & Mensualité Totale</div>
+            $$M_{assurance} = K_{principal} 	imes rac{	au_{assurance}}{100 	imes 12}$$
+            $$M_{totale} = M(K_{principal}, 	au_{p}, D_{p}) + M_{comp1} + M_{comp2} + M_{assurance}$$
+        </div>
+
+        <h3>4.4 Mode "Capacité d'emprunt" : Calcul Exact avec Assurance</h3>
+        <p>Pour calculer la capacité d'emprunt exacte sans sous-estimer le poids de l'assurance, le simulateur résout l'équation intégrée :</p>
+        <div class="math-box">
+            <div class="formula-title">Capital Principal Max Empruntable</div>
+            $$M_{dispo\_principal} = \max(M_{max} - M_{comp1} - M_{comp2}, 0)$$
+            $$K_{principal} = rac{M_{dispo\_principal}}{rac{r}{1 - (1+r)^{-n}} + rac{	au_{assurance}}{100 	imes 12}}$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Prix du Bien Max Estimé</div>
+            $$P_{max} = rac{\max(K_{principal} + K_{comp1} + K_{comp2} + A_{total} - F_{annexes}, 0)}{1 + rac{	au_{notaire}}{100}}$$
+        </div>
+
+        <h3>4.5 Équations du Prêt Relais (In Fine)</h3>
+        <div class="math-box">
+            <div class="formula-title">Avance Banque & Apport Additionnel</div>
+            $$V_{avance} = P_{vente\_estime} 	imes rac{	ext{Quotité}}{100}$$
+            $$A_{relais} = \max(V_{avance} - CRD_{ancien\_pret}, 0)$$
+            $$A_{total} = A_{personnel} + A_{relais}$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Coût Mensuel Intercalaire du Prêt Relais</div>
+            $$M_{relais} = V_{avance} 	imes rac{	au_{relais}}{100 	imes 12}$$
+        </div>
+
+        <h3>4.6 Décomposition Mensuelle de l'Amortissement (Mois $m$)</h3>
+        <div class="math-box">
+            <div class="formula-title">Intérêts & Part de Capital Amorti</div>
+            $$	ext{Intérêts}(m) = CRD(m-1) 	imes r$$
+            $$	ext{Capital Amorti}(m) = M_{hors\_assurance} - 	ext{Intérêts}(m)$$
+            $$CRD(m) = \max(CRD(m-1) - 	ext{Capital Amorti}(m), 0)$$
+        </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section id="formules-fiscalite">
+        <h2>5. Équations de la Fiscalité (Barème IR 2026)</h2>
+        <p>L'impôt estimé repose sur le barème officiel 2026 de l'Impôt sur le Revenu (revenus 2025) appliqué au Quotient Familial.</p>
+
+        <h3>5.1 Parts Fiscales ($P$)</h3>
+        <div class="math-box">
+            <div class="formula-title">Calcul des Parts du Foyer</div>
+            $$P = N_{adultes} + \min(N_{enfants}, 2) 	imes 0.5 + \max(N_{enfants} - 2, 0) 	imes 1.0$$
+            <small><i>Où $N_{adultes} = 2$ si Vie en couple, sinon $1$.</i></small>
+        </div>
+
+        <h3>5.2 Revenu Net Imposable Annuel ($R_{imposable}$)</h3>
+        <div class="math-box">
+            <div class="formula-title">Abattement Forfaitaire pour Frais Professionnels (10%)</div>
+            $$R_{imposable} = R_{net\_ai} 	imes 12 	imes (1 - 0.10)$$
+        </div>
+
+        <h3>5.3 Barème Progressif par Part ($Q = R_{imposable} / P$)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tranche de Quotient Familial ($Q$)</th>
+                    <th>Taux Marginal d'Imposition ($	au_m$)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Jusqu'à 11 600 €</td><td>0 %</td></tr>
+                <tr><td>De 11 601 € à 29 579 €</td><td>11 %</td></tr>
+                <tr><td>De 29 580 € à 84 577 €</td><td>30 %</td></tr>
+                <tr><td>De 84 578 € à 181 917 €</td><td>41 %</td></tr>
+                <tr><td>Au-delà de 181 917 €</td><td>45 %</td></tr>
+            </tbody>
+        </table>
+        <div class="math-box">
+            <div class="formula-title">Impôt Mensuel Estimé du Foyer</div>
+            $$I_{part} = \sum_{	ext{tranches}} 	ext{Largeur Tranche Imposable} 	imes 	au_m$$
+            $$I_{mensuel} = rac{I_{part} 	imes P}{12}$$
+        </div>
+        <div class="callout callout-info">
+            <strong>Note :</strong> En cas de déclarations séparées dans un couple (concubinage), l'impôt est calculé de manière indépendante pour $R_1$ et $R_2$ puis additionné : $I_{mensuel} = I_{mensuel, 1} + I_{mensuel, 2}$.
+        </div>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section id="formules-budget">
+        <h2>6. Équations du Reste à Vivre & Budget</h2>
+
+        <h3>6.1 Indicateurs Clés de Restes à Vivre</h3>
+        <div class="math-box">
+            <div class="formula-title">Reste à Vivre Brut (Net d'Impôt, Avant Charges Fixes & Dépenses)</div>
+            $$RAV_{brut} = R_{net\_ai} - I_{mensuel} - M_{totale}$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Reste à Vivre "Façon Banque" (Après Charges Fixes)</div>
+            $$RAV_{avant\_dépenses} = RAV_{brut} - C_{fixes} = R_{net\_ai} - I_{mensuel} - M_{totale} - C_{fixes}$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Reste à Vivre Par Personne</div>
+            $$RAV_{par\_personne} = rac{RAV_{avant\_dépenses}}{N_{personnes\_foyer}}$$
+        </div>
+
+        <h3>6.2 Capacité d'Épargne Nette & Seuils</h3>
+        <div class="math-box">
+            <div class="formula-title">Capacité d'Épargne Nette Mensuelle</div>
+            $$E_{nette} = RAV_{avant\_dépenses} - \sum 	ext{Dépenses Courantes Mensuelles}$$
+        </div>
+        <div class="math-box">
+            <div class="formula-title">Seuil Indicatif de Reste à Vivre du Foyer</div>
+            $$Seuil_{foyer} = Seuil_{1ère\_pers} + Seuil_{supp} 	imes \max(N_{personnes\_foyer} - 1, 0)$$
+            <small><i>Par défaut : $Seuil_{1ère\_pers} = 800€$, $Seuil_{supp} = 400€$.</i></small>
+        </div>
+    </section>
+
+    <!-- SECTION 7 -->
+    <section id="interpretation-resultats">
+        <h2>7. Interprétation des Résultats & Métriques du Dashboard</h2>
+
+        <p>Le tableau ci-dessous résume comment analyser chaque indicateur restitué par le tableau de bord :</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Métrique / Résultat</th>
+                    <th>Où le trouver ?</th>
+                    <th>Interprétation & Règles d'Analyse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="tag tag-output">Capital Prêt Principal</span></td>
+                    <td>Onglet Prêt (Haut)</td>
+                    <td>Représente la part effective financée par la banque sur le prêt bancaire classique amortissable.</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Mensualité Totale</span></td>
+                    <td>Onglet Prêt & Budget</td>
+                    <td>
+                        <strong>Somme de toutes vos échéances de prêt + assurances.</strong> C'est le prélèvement mensuel fixe qui sera effectué sur votre compte bancaire.
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Taux d'endettement réel</span></td>
+                    <td>Onglet Budget (Badge Métrique)</td>
+                    <td>
+                        Calculé sur le revenu <strong>net avant impôt</strong> : $(M_{totale} + C_{fixes}) / R_{net\_ai}$.<br>
+                        • <strong>&le; 35 % :</strong> Conforme aux directives HCSF (Haut Conseil de Stabilité Financière).<br>
+                        • <strong>&gt; 35 % :</strong> Risque d'alerte ou de refus bancaire (zone d'avertissement orangée/rouge).
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Reste à vivre par personne</span></td>
+                    <td>Onglet Budget</td>
+                    <td>
+                        Évalue ce qu'il reste à chaque membre du foyer pour vivre (alimentation, habillement, loisirs) après paiement du crédit, des impôts et des charges fixes. Doit idéalement dépasser le seuil indicatif.
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Capacité d'épargne nette</span></td>
+                    <td>Onglet Budget (Haut)</td>
+                    <td>
+                        Montant réellement disponible à la fin de chaque mois une fois <i>toutes</i> les dépenses courantes et le prêt payés.<br>
+                        • <strong>Positif :</strong> Capacité de capitalisation ou de constitution d'épargne de précaution.<br>
+                        • <strong>Négatif :</strong> Alerte rouge (déficit budgétaire structurel).
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Prêt Relais (Impact)</span></td>
+                    <td>Encadré Info Bleu</td>
+                    <td>
+                        Affiche les intérêts intercalaires mensuels exigés durant la période transitoire (avant la vente de l'ancien bien). Ce coût réduit temporairement votre capacité d'épargne nette sans altérer la structure à long terme de votre prêt principal.
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-output">Graphique Waterfall</span></td>
+                    <td>Onglet Budget (Bas)</td>
+                    <td>
+                        Visualise en cascade la décomposition étape par étape de votre revenu brut initial jusqu'à l'épargne nette finale. Permet d'identifier immédiatement le plus gros poste de coût.
+                    </td>
+                </tr>
+            </tbody>
+        </table>    </section>
+
+
+        <div class="callout callout-warning">
+            <strong>⚠️ Avertissement Légal & Fiscal :</strong> Les estimations d'impôts et de frais de notaire sont fournies à titre purement indicatif sur la base de modèles simplifiés (barème 2026 / abattement 10%). Elles ne remplacent pas une étude personnalisée par un courtier, un notaire ou les services de la direction générale des Finances publiques (impots.gouv.fr).
+        </div>
+    </section>
+
+    <footer>
+        Manuel Utilisateur Intégré - Dashboard Simulateur Immobilier & Budget - Généré pour consultation directe.
+    </footer>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</body>
+</html>
